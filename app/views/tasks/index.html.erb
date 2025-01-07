@@ -1,0 +1,24 @@
+<h1>Tasks</h1>
+
+<%= link_to "New Task", new_task_path, class: "button" %>
+
+<div class="tasks">
+  <% @tasks.each do |task| %>
+    <div class="task <%= task.completed ? 'completed' : '' %>">
+      <div class="task-header">
+        <h2><%= task.title %></h2>
+        <div class="task-actions">
+          <%= button_to toggle_task_path(task), method: :patch, class: "button" do %>
+            <%= task.completed ? "Mark Incomplete" : "Mark Complete" %>
+          <% end %>
+          <%= link_to "Edit", edit_task_path(task), class: "button" %>
+          <%= button_to "Delete", task_path(task), method: :delete, class: "button delete",
+                      data: { confirm: "Are you sure?" } %>
+        </div>
+      </div>
+      
+      <p class="description"><%= task.description %></p>
+      <p class="due-date">Due: <%= task.due_date&.strftime("%B %d, %Y at %I:%M %p") %></p>
+    </div>
+  <% end %>
+</div>
